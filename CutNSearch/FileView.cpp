@@ -107,7 +107,7 @@ void CFileView::FillFileView(CString strFolder)
 	_strlist filelist;
 	ExtractFolder(strFolder, strFolder, filelist, hRoot);
 
-	//pView->SetTreeDragItem(&m_FileViewImages, m_rootItem, &m_wndFileView);
+//	pView->SetTreeDragItem(&m_FileViewImages, m_rootItem, &m_wndFileView);
 
 	int a = 0;
 }
@@ -162,31 +162,31 @@ HTREEITEM CFileView::ExtractFolder(CString strFolder, CString strName, _strlist&
 
 void CFileView::OnContextMenu(CWnd* pWnd, CPoint point)
 {
-	//CTreeCtrl* pWndTree = (CTreeCtrl*) &m_wndFileView;
-	//ASSERT_VALID(pWndTree);
+	CTreeCtrl* pWndTree = (CTreeCtrl*) &m_wndFileView;
+	ASSERT_VALID(pWndTree);
 
-	//if (pWnd != pWndTree)
-	//{
-	//	CDockablePane::OnContextMenu(pWnd, point);
-	//	return;
-	//}
+	if (pWnd != pWndTree)
+	{
+		CDockablePane::OnContextMenu(pWnd, point);
+		return;
+	}
 
-	//if (point != CPoint(-1, -1))
-	//{
-	//	// Select clicked item:
-	//	CPoint ptTree = point;
-	//	pWndTree->ScreenToClient(&ptTree);
+	if (point != CPoint(-1, -1))
+	{
+		// Select clicked item:
+		CPoint ptTree = point;
+		pWndTree->ScreenToClient(&ptTree);
 
-	//	UINT flags = 0;
-	//	HTREEITEM hTreeItem = pWndTree->HitTest(ptTree, &flags);
-	//	if (hTreeItem != NULL)
-	//	{
-	//		pWndTree->SelectItem(hTreeItem);
-	//	}
-	//}
+		UINT flags = 0;
+		HTREEITEM hTreeItem = pWndTree->HitTest(ptTree, &flags);
+		if (hTreeItem != NULL)
+		{
+			pWndTree->SelectItem(hTreeItem);
+		}
+	}
 
-	//pWndTree->SetFocus();
-	//theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EXPLORER, point.x, point.y, this, TRUE);
+	pWndTree->SetFocus();
+	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EXPLORER, point.x, point.y, this, TRUE);
 }
 
 void CFileView::AdjustLayout()
@@ -199,10 +199,11 @@ void CFileView::AdjustLayout()
 	CRect rectClient;
 	GetClientRect(rectClient);
 
-	int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
+//	int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
 
-	m_wndToolBar.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndFileView.SetWindowPos(NULL, rectClient.left + 1, rectClient.top + cyTlb + 1, rectClient.Width() - 2, rectClient.Height() - cyTlb - 2, SWP_NOACTIVATE | SWP_NOZORDER);
+//	m_wndToolBar.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
+//	m_wndFileView.SetWindowPos(NULL, rectClient.left + 1, rectClient.top + cyTlb + 1, rectClient.Width() - 2, rectClient.Height() - cyTlb - 2, SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndFileView.SetWindowPos(NULL, rectClient.left + 1, rectClient.top + 1, rectClient.Width() - 2, rectClient.Height() - 2, SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 void CFileView::OnProperties()

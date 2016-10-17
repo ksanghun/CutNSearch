@@ -34,8 +34,8 @@ public:
 
 	bool LoadSNImage(CString strPath, CSNImage* pInfo, unsigned short resolution);
 	GLuint LoadSNImage(CString strPath);
-//	void SetTreeDragItem(CImageList* pImage, HTREEITEM hItem, CViewTree* pCtrl);
-//	void AddImageData(HTREEITEM _item);
+	void SetTreeDragItem(CImageList* pImage, HTREEITEM hItem, CViewTree* pCtrl);
+	void AddImageData(HTREEITEM _item);
 	void SetImageData();
 	void PushImageDataSet(unsigned long _code, unsigned long _pcode, CSNImage* pimg);
 	void PrepareRender();

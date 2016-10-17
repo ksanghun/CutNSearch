@@ -175,12 +175,12 @@ void CCutNSearchView::SetDlgImagePath(CString str)
 	pDlg->SetSNImage(str);
 }
 
-//void CCutNSearchView::SetTreeDragItem(CImageList* pImage, HTREEITEM hItem, CViewTree* pCtrl)
-//{
-//	if (m_pImageView){
-//		m_pImageView->SetTreeDragItem(pImage, hItem, pCtrl);
-//	}
-//}
+void CCutNSearchView::SetTreeDragItem(CImageList* pImage, HTREEITEM hItem, CViewTree* pCtrl)
+{
+	if (m_pImageView){
+		m_pImageView->SetTreeDragItem(pImage, hItem, pCtrl);
+	}
+}
 
 void CCutNSearchView::RenderImageView()
 {
@@ -314,10 +314,9 @@ void CCutNSearchView::OnInitialUpdate()
 
 	if (m_pImageView){
 	//	m_pImageView->SetTreeDragItem(0,0,0);
-		m_pImageView->SetImageData();
+	//	m_pImageView->SetImageData();
 
 		// Add Log Data //
-
 		LoadLogFile();
 	}
 	

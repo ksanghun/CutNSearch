@@ -3,7 +3,7 @@
 //
 
 #pragma once
-//#include "FileView.h"
+#include "FileView.h"
 #include "ClassView.h"
 #include "OutputWnd.h"
 #include "DlgConf.h"
@@ -35,7 +35,7 @@ public:
 	void AddLogResult(CString strName);
 
 
-//	CFileView* GetViewFiewCtrl() { return &m_wndFileView; }
+	CFileView* GetViewFiewCtrl() { return &m_wndFileView; }
 
 	std::vector<_IMGPATHInfo>& GetImageListInfo() { return m_imgFileList; }
 // Implementation
@@ -51,7 +51,7 @@ protected:  // control bar embedded members
 //	CMFCToolBar       m_wndToolBar;
 	CMFCStatusBar     m_wndStatusBar;
 	CMFCToolBarImages m_UserImages;
-//	CFileView         m_wndFileView; 
+	CFileView         m_wndFileView; 
 	CClassView        m_wndClassView;
 	COutputWnd        m_wndOutput;
 

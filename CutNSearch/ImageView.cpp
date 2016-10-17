@@ -560,21 +560,21 @@ void CImageView::OnLButtonUp(UINT nFlags, CPoint point)
 }
 
 
-//void CImageView::SetTreeDragItem(CImageList* pImage, HTREEITEM hItem, CViewTree* pCtrl)
-//{
-//	//m_pTreeDragImage = pImage;	
-//	//m_hDragItem = hItem;
-//	//m_pTreeCtrl = pCtrl;
-//	//CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
-//	//m_pTreeDragImage = pM->GetViewFiewCtrl()->GetImageList();
-//	//m_hDragItem = pM->GetViewFiewCtrl()->GetRootItem();
-//	//m_pTreeCtrl = pM->GetViewFiewCtrl()->GetTreeViewCtrl();
-//
-//	//AddImageData(m_hDragItem);
-//	//pM->AddOutputString(_T("Generate thumbnails"));
-//	//SetTimer(_ADDIMG, 10, NULL);
-//
-//}
+void CImageView::SetTreeDragItem(CImageList* pImage, HTREEITEM hItem, CViewTree* pCtrl)
+{
+	m_pTreeDragImage = pImage;	
+	m_hDragItem = hItem;
+	m_pTreeCtrl = pCtrl;
+	CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
+	m_pTreeDragImage = pM->GetViewFiewCtrl()->GetImageList();
+	m_hDragItem = pM->GetViewFiewCtrl()->GetRootItem();
+	m_pTreeCtrl = pM->GetViewFiewCtrl()->GetTreeViewCtrl();
+
+	AddImageData(m_hDragItem);
+	pM->AddOutputString(_T("Generate thumbnails"));
+	SetTimer(_ADDIMG, 10, NULL);
+
+}
 
 void CImageView::PushImageDataSet(unsigned long _code, unsigned long _pcode, CSNImage* pimg)
 {
@@ -609,7 +609,7 @@ void CImageView::PushImageDataSet(unsigned long _code, unsigned long _pcode, CSN
 	}
 }
 
-/*
+
 void CImageView::AddImageData(HTREEITEM _item)
 {
 	
@@ -728,7 +728,7 @@ void CImageView::AddImageData(HTREEITEM _item)
 		}
 	}
 }
-*/
+
 
 void CImageView::SetImageData()
 {
@@ -776,15 +776,15 @@ void CImageView::OnMouseMove(UINT nFlags, CPoint point)
 
 	if (m_pTreeDragImage)
 	{				
-	//	m_pTreeCtrl->SendMessage(WM_LBUTTONUP);
-		//AddImageData(m_hDragItem);		
+		m_pTreeCtrl->SendMessage(WM_LBUTTONUP);
+		AddImageData(m_hDragItem);		
 
-		//CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
-		//pM->AddOutputString(_T("Generate thumbnails"));
-		//SetTimer(_ADDIMG, 10, NULL);
+		CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
+		pM->AddOutputString(_T("Generate thumbnails"));
+		SetTimer(_ADDIMG, 10, NULL);
 
-		//m_pTreeCtrl->ReleaseItemDrag();
-		//m_pTreeDragImage = NULL;
+		m_pTreeCtrl->ReleaseItemDrag();
+		m_pTreeDragImage = NULL;
 	}
 	
 	if (GetCapture()){		
@@ -1447,9 +1447,12 @@ bool CImageView::SearchInLogFile(IplImage* pCut)
 
 			IplImage *gray = cvLoadImage((CStringA)filePath, CV_LOAD_IMAGE_GRAYSCALE);
 
+			bool IsOk = false;
+			if (pCut->width > gray->width*1.5)	IsOk = false;
+			if (pCut->height > gray->height*1.5) IsOk = false;
 			
 
-			if (gray){
+			if (gray && IsOk){
 				//cvShowImage("Resize", gray);
 
 				short newWidth = gray->width * 2;
