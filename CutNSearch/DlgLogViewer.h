@@ -12,6 +12,7 @@ public:
 	CDlgLogViewer(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgLogViewer();
 
+	BOOL AddLogList();
 // Dialog Data
 	enum { IDD = IDD_DIALOG_LOGVIEW };
 
@@ -22,6 +23,7 @@ protected:
 public:
 	afx_msg void OnLvnItemchangedList1(NMHDR *pNMHDR, LRESULT *pResult);
 	CListCtrl m_ctrlList;
+	int m_listCnt;
 	virtual BOOL Create(CWnd* pParentWnd = NULL);
 	virtual BOOL OnInitDialog();
 };

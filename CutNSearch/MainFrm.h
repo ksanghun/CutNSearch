@@ -80,6 +80,7 @@ public:
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnFileConfiguration();
+	afx_msg void OnViewLogviewer();
 };
 
 

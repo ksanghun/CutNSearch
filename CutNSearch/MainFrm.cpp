@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_FILE_OPEN, &CMainFrame::OnFileOpen)
 	ON_WM_MOUSEMOVE()
 	ON_COMMAND(ID_FILE_CONFIGURATION, &CMainFrame::OnFileConfiguration)
+	ON_COMMAND(ID_VIEW_LOGVIEWER, &CMainFrame::OnViewLogviewer)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -190,6 +191,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	//InitConfituration();	
 	//m_wndFileView.FillFileView(m_strSrcPath);
+
+
+	m_pDlgLog = new CDlgLogViewer;
+	m_pDlgLog->Create(this);
+	m_pDlgLog->ShowWindow(SW_HIDE);
 	return 0;
 }
 
@@ -627,4 +633,13 @@ void CMainFrame::OnFileConfiguration()
 			fclose(fp);
 		}
 	}
+}
+
+
+void CMainFrame::OnViewLogviewer()
+{
+	// TODO: Add your command handler code here
+	m_pDlgLog->ShowWindow(SW_SHOW);
+	m_pDlgLog->AddLogList();
+	
 }
