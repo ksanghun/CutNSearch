@@ -50,7 +50,7 @@ CImageView::CImageView()
 	m_searchCnt = 0;
 	m_cutImg = NULL;
 	m_pTemplete = NULL;
-	m_Threshold = 0.7f;
+	m_Threshold = 0.65f;
 //	m_bIsTemplateCreated = false;
 	m_bKeyWordSearch = false;
 
@@ -1196,6 +1196,13 @@ void CImageView::SaveLog(IplImage* pCut)
 		}
 		fclose(fp);
 	}
+
+
+	// Add ListCtrl ====================//
+	CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
+	CString strDate;
+	strDate.Format(_T("%d%d%d%d%d"), st.wYear, st.wMonth, st.wDay, st.wHour, st.wSecond);
+	pM->AddLogList(GetLogCBitmap(strImg), strDate);
 }
 
 
@@ -1422,7 +1429,7 @@ bool CImageView::SearchInLogFile(IplImage* pCut)
 	bWorking = file_find.FindFile(path + ("\\*.jpg"));
 	
 
-	float sTh = m_Threshold;
+	float sTh = 0.6f;
 //	CString strLogFile = _T("");
 	while (bWorking)
 	{

@@ -184,13 +184,13 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 	//
 	
-	InitConfituration();
-	GetImgFilePath(m_strSrcPath);
-
-
+	//InitConfituration();	
 	//m_wndFileView.FillFileView(m_strSrcPath);
 	return 0;
 }
+
+
+
 
 void CMainFrame::AddLogList(CBitmap* bmp, CString strData)
 {
@@ -297,6 +297,9 @@ void CMainFrame::InitConfituration()
 			}
 		}		
 	}
+
+
+	GetImgFilePath(m_strSrcPath);
 }
 
 

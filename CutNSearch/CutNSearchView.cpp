@@ -308,11 +308,16 @@ void CCutNSearchView::OnInitialUpdate()
 	CView::OnInitialUpdate();
 
 	// TODO: Add your specialized code here and/or call the base class
+
+	CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
+	pM->InitConfituration();
+
 	if (m_pImageView){
 	//	m_pImageView->SetTreeDragItem(0,0,0);
 		m_pImageView->SetImageData();
 
 		// Add Log Data //
+
 		LoadLogFile();
 	}
 	
