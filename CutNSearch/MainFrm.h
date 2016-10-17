@@ -7,7 +7,7 @@
 #include "ClassView.h"
 #include "OutputWnd.h"
 #include "DlgConf.h"
-
+#include "DlgLogViewer.h"
 class CMainFrame : public CFrameWndEx
 {
 	
@@ -60,6 +60,8 @@ protected:  // control bar embedded members
 	CString			m_strLogPath;
 
 	std::vector<_IMGPATHInfo> m_imgFileList;
+
+	CDlgLogViewer* m_pDlgLog;
 
 // Generated message map functions
 protected:

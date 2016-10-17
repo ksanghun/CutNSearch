@@ -117,6 +117,7 @@
     <ClInclude Include="data_type.h" />
     <ClInclude Include="DlgConf.h" />
     <ClInclude Include="DlgCutNSearch.h" />
+    <ClInclude Include="DlgLogViewer.h" />
     <ClInclude Include="FileView.h" />
     <ClInclude Include="ImageView.h" />
     <ClInclude Include="LogListCtrl.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="CutNSearchView.cpp" />
     <ClCompile Include="DlgConf.cpp" />
     <ClCompile Include="DlgCutNSearch.cpp" />
+    <ClCompile Include="DlgLogViewer.cpp" />
     <ClCompile Include="FileView.cpp" />
     <ClCompile Include="ImageView.cpp" />
     <ClCompile Include="LogListCtrl.cpp" />

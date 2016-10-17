@@ -51,6 +51,8 @@ CMainFrame::CMainFrame()
 
 	m_strSrcPath = "";
 	m_strLogPath = "";
+
+	m_pDlgLog = NULL;
 }
 
 CMainFrame::~CMainFrame()

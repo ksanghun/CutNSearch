@@ -522,6 +522,14 @@ BEGIN
     LTEXT           "Log File Location: ",IDC_STATIC,9,31,58,8
 END
 
+IDD_DIALOG_LOGVIEW DIALOGEX 0, 0, 407, 239
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Log Viewer"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,393,225
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -545,6 +553,14 @@ BEGIN
         RIGHTMARGIN, 248
         TOPMARGIN, 7
         BOTTOMMARGIN, 79
+    END
+
+    IDD_DIALOG_LOGVIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 400
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 232
     END
 END
 #endif    // APSTUDIO_INVOKED
