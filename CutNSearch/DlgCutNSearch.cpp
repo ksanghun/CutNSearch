@@ -16,7 +16,7 @@ CDlgCutNSearch::CDlgCutNSearch(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgCutNSearch::IDD, pParent)
 	, m_editTh(0.0f)
 	, m_editKeyword(_T(""))
-	, m_checkKeyword(FALSE)
+	, m_checlLogFile(FALSE)
 {
 	m_pView = NULL;
 }
@@ -35,7 +35,7 @@ void CDlgCutNSearch::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT1, m_editTh);
 	DDV_MinMaxFloat(pDX, m_editTh, 0, 1.0);
 	DDX_Text(pDX, IDC_EDIT_KEYWORD, m_editKeyword);
-	DDX_Check(pDX, IDC_CHECK_KEYWORD, m_checkKeyword);
+	DDX_Check(pDX, IDC_CHECK_KEYWORD, m_checlLogFile);
 }
 
 
@@ -205,6 +205,9 @@ void CDlgCutNSearch::OnBnClickedButtonKeywordSearch()
 void CDlgCutNSearch::OnBnClickedCheckKeyword()
 {
 	// TODO: Add your control notification handler code here
+	UpdateData(TRUE);
+	pView->EnableLogSearch(m_checlLogFile);
+
 
 }
 

@@ -372,3 +372,10 @@ void CCutNSearchView::AddMatchResultFromLogFile(CString strName)
 	}
 
 }
+
+void CCutNSearchView::EnableLogSearch(BOOL isLog)
+{
+	if (m_pImageView){
+		m_pImageView->EnableLogSearch(isLog);
+	}
+}

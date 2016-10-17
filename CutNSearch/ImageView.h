@@ -51,7 +51,13 @@ public:
 	void ReleaseImageData();
 	IplImage* ExtractAverTempleteFromResult();
 	CBitmap* GetLogCBitmap(CString strFile);
+
+	void EnableLogSearch(BOOL isLog) { m_bLogSearch = isLog; }
+
+
 private:
+
+	BOOL m_bLogSearch;
 
 	CPoint m_mousedown;
 	CPoint m_preMmousedown;

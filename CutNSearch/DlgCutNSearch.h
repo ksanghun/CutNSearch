@@ -41,7 +41,7 @@ public:
 	float m_editTh;
 	afx_msg void OnBnClickedButtonClearResult();
 	CString m_editKeyword;
-	BOOL m_checkKeyword;
+	BOOL m_checlLogFile;
 	afx_msg void OnBnClickedButtonKeywordSearch();
 	afx_msg void OnBnClickedCheckKeyword();
 	afx_msg void OnBnClickedBnPixelmap();

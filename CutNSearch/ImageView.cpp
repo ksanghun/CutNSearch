@@ -54,7 +54,7 @@ CImageView::CImageView()
 //	m_bIsTemplateCreated = false;
 	m_bKeyWordSearch = false;
 
-
+	m_bLogSearch = FALSE;
 
 	mtSetPoint3D(&m_result_color[9], 1.0f, 0.0f, 0.0f);
 	mtSetPoint3D(&m_result_color[8], 1.0f, 0.2f, 0.0f);
@@ -567,7 +567,7 @@ void CImageView::SetTreeDragItem(CImageList* pImage, HTREEITEM hItem, CViewTree*
 	m_pTreeCtrl = pCtrl;
 	CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
 	m_pTreeDragImage = pM->GetViewFiewCtrl()->GetImageList();
-	m_hDragItem = pM->GetViewFiewCtrl()->GetRootItem();
+//	m_hDragItem = pM->GetViewFiewCtrl()->GetRootItem();
 	m_pTreeCtrl = pM->GetViewFiewCtrl()->GetTreeViewCtrl();
 
 	AddImageData(m_hDragItem);
@@ -1181,10 +1181,9 @@ void CImageView::SaveLog(IplImage* pCut)
 			if (resSize > 0){
 				fwrite(&nCode, sizeof(int), 1, fp);
 				fwrite(&resSize, sizeof(int), 1, fp);
-
+				fwrite(&m_Threshold, sizeof(float), 1, fp);
 
 				std::vector<_MATCHInfo>* vecRes = (*iter)->GetMatchResult();
-
 				for (int i = 0; i < resSize; i++){
 					vecRes->at(i).pos.x;
 					fwrite(&vecRes->at(i).pos.x, sizeof(float), 1, fp);
@@ -1196,6 +1195,52 @@ void CImageView::SaveLog(IplImage* pCut)
 		}
 		fclose(fp);
 	}
+
+
+
+	// Write Ascii=========================//
+	//strFile += ".txt";
+	//fopen_s(&fp, (CStringA)strFile, "w");
+	//if (fp){
+
+	//	_vecSNImage::iterator iter = m_vecImageData.begin();
+	//	unsigned int recordSize = 0;
+	//	unsigned int nCode = 0;
+
+	//	CString strTmp;
+	//	for (; iter != m_vecImageData.end(); iter++){
+	//		//	(*iter)->DrawThumbNail(1.0f);
+	//		nCode = (*iter)->GetCode();
+	//		int resSize = (*iter)->GetResultSize();
+	//		if (resSize > 0){
+
+	//			strTmp.Format(_T("%d"), nCode);
+	//			fwrite(strTmp.GetBuffer(), strTmp.GetLength(), 1, fp);
+
+	//			strTmp.Format(_T("%d"), resSize);
+	//			fwrite(strTmp.GetBuffer(), strTmp.GetLength(), 1, fp);
+	//							
+	//			std::vector<_MATCHInfo>* vecRes = (*iter)->GetMatchResult();
+
+	//			for (int i = 0; i < resSize; i++){
+	//				vecRes->at(i).pos.x;	
+
+	//				strTmp.Format(_T("%3.2f"), vecRes->at(i).pos.x);
+	//				fwrite(strTmp.GetBuffer(), strTmp.GetLength(), 1, fp);
+	//				strTmp.Format(_T("%3.2f"), vecRes->at(i).pos.y);
+	//				fwrite(strTmp.GetBuffer(), strTmp.GetLength(), 1, fp);
+	//				strTmp.Format(_T("%3.2f"), vecRes->at(i).pos.z);
+	//				fwrite(strTmp.GetBuffer(), strTmp.GetLength(), 1, fp);
+	//				strTmp.Format(_T("%3.2f"), vecRes->at(i).accuracy);
+	//				fwrite(strTmp.GetBuffer(), strTmp.GetLength(), 1, fp);
+	//			}
+	//		}
+	//	}
+	//	fclose(fp);
+	//}
+	//======================================//
+
+
 
 
 	// Add ListCtrl ====================//
@@ -1410,6 +1455,9 @@ void CImageView::StartCNSearchAll(IplImage *ptemp)
 
 bool CImageView::SearchInLogFile(IplImage* pCut)
 {
+	if (m_bLogSearch == FALSE)
+		return false;
+
 	//return false;
 	CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
 
@@ -1441,13 +1489,9 @@ bool CImageView::SearchInLogFile(IplImage* pCut)
 			//info.strName = file_find.GetFileName();
 			CString filePath = file_find.GetFilePath();		
 
-
-			
-
-
 			IplImage *gray = cvLoadImage((CStringA)filePath, CV_LOAD_IMAGE_GRAYSCALE);
 
-			bool IsOk = false;
+			bool IsOk = true;
 			if (pCut->width > gray->width*1.5)	IsOk = false;
 			if (pCut->height > gray->height*1.5) IsOk = false;
 			
@@ -1525,10 +1569,12 @@ void CImageView::AddMatchResultFromLogFile(CString strName)
 	if (fp){
 		unsigned int resSize = 0;
 		unsigned int nCode = 0;
+		float fTh = 0.0f;
 
 		while (!feof(fp)){
 			fread(&nCode, sizeof(int), 1, fp);
 			fread(&resSize, sizeof(int), 1, fp);
+			fread(&fTh, sizeof(int), 1, fp);
 
 			//if (m_mapImageData.find(nCode) )
 			//CSNImage* pImg = m_mapImageData.find(nCode);
@@ -1559,7 +1605,7 @@ void CImageView::AddMatchResultFromLogFile(CString strName)
 
 void CImageView::StartCNSearch(IplImage *ptemp, bool bIsKeyword)
 {
-	ClearMatchingResult();
+//	ClearMatchingResult();
 
 	m_cutImg = ptemp;
 	m_bKeyWordSearch = bIsKeyword;

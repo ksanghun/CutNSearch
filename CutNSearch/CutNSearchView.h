@@ -52,7 +52,7 @@ class CViewTree;
 
 		void LoadLogFile();
 		void AddMatchResultFromLogFile(CString strName);
-
+		void EnableLogSearch(BOOL isLog);
 	protected:
 
 		// Implementation
