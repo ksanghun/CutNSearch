@@ -6,9 +6,6 @@
 #include "ImageView.h"
 #include "DlgCutNSearch.h"
 
-
-
-
 class CViewTree;
 	class CCutNSearchView : public CView
 	{
@@ -27,7 +24,7 @@ class CViewTree;
 	private:
 		CImageView* m_pImageView;
 		CDlgCutNSearch* pDlg;
-
+		CMFCTabCtrl m_ctrlTab;
 		
 
 		// Overrides
@@ -53,6 +50,7 @@ class CViewTree;
 		void LoadLogFile();
 		void AddMatchResultFromLogFile(CString strName);
 		void EnableLogSearch(BOOL isLog);
+		void initImageData();
 	protected:
 
 		// Implementation

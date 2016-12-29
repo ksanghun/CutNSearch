@@ -80,11 +80,16 @@ private:
 	int			m_nHeight;
 
 
+	int			m_wndWidth;
+	int			m_wndHeight;
+
+
 	CImageList  *m_pTreeDragImage;
 	HTREEITEM  m_hDragItem;
 	CViewTree* m_pTreeCtrl;
 
 	float m_left, m_right, m_bottom, m_top;
+	float m_centerx, m_centery;
 	float m_fDataLastPos;
 	CSNImage* m_pCurrSelImg;
 

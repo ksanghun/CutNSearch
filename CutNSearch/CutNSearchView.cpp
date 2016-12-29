@@ -12,7 +12,7 @@
 #include "CutNSearchDoc.h"
 #include "CutNSearchView.h"
 #include "MainFrm.h"
-
+#include "afxbasetabctrl.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -130,12 +130,24 @@ int CCutNSearchView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect cRect;
 	GetWindowRect(&cRect);
 
+
+	// Create tab ctrl //
+	CRect rectDummy;
+	rectDummy.SetRectEmpty();
+	if (!m_ctrlTab.Create(CMFCTabCtrl::STYLE_3D_ROUNDED, rectDummy, this, 1))
+	{
+		TRACE0("Failed to create output tab window\n");
+		return -1;      // fail to create
+	}
+
 	if (m_pImageView == nullptr){
 		m_pImageView = new CImageView;
-		m_pImageView->Create(NULL, NULL, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE, cRect, this, 0x01);
+	//	m_pImageView->Create(NULL, NULL, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE, cRect, this, 0x01);
+		m_pImageView->Create(NULL, NULL, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE, cRect, &m_ctrlTab, 0x01);
 		m_pImageView->InitGLview(0, 0);
 	}
 
+	m_ctrlTab.AddTab(m_pImageView, L"2D View", (UINT)0);
 
 	if (pDlg == NULL){
 		pDlg = new CDlgCutNSearch;
@@ -151,9 +163,12 @@ void CCutNSearchView::OnSize(UINT nType, int cx, int cy)
 	CView::OnSize(nType, cx, cy);
 
 	// TODO: Add your message handler code here
-	if (m_pImageView){
-		m_pImageView->MoveWindow(0, 0, cx, cy);
-	}
+	m_ctrlTab.SetWindowPos(NULL, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
+	m_ctrlTab.SetLocation(CMFCTabCtrl::LOCATION_TOP);
+
+	//if (m_pImageView){
+	//	m_pImageView->MoveWindow(0, 0, cx, cy);
+	//}
 }
 
 void CCutNSearchView::AddSNImage(CString str)
@@ -293,6 +308,13 @@ void CCutNSearchView::ClearMatchingResult()
 void CCutNSearchView::OnImageClearimages()
 {
 	// TODO: Add your command handler code here
+	if (m_pImageView){
+		m_pImageView->ReleaseImageData();
+	}
+}
+
+void CCutNSearchView::initImageData()
+{
 	if (m_pImageView){
 		m_pImageView->ReleaseImageData();
 	}

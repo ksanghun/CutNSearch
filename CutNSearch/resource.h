@@ -87,6 +87,7 @@
 #define IDC_BUTTON_KEYWORD_SEARCH       1006
 #define IDC_BN_PIXELMAP                 1007
 #define IDC_LIST1                       1008
+#define IDC_EDIT_KEYWORD2               1008
 #define ID_RENDER_SORTBYGROUP           32771
 #define ID_RENDER_SORTBYORDER           32772
 #define ID_IMAGE_CLEARIMAGES            32773

@@ -148,8 +148,12 @@ void CDlgCutNSearch::SetSNImage(CString strPath)
 		if (h < 512)
 			h = 512;
 
-		MoveWindow(0, 0, w + 16, h + 80);
-		m_pView->MoveWindow(0, 40, w, h);
+		//MoveWindow(0, 0, w + 16, h + 80);
+		//m_pView->MoveWindow(0, 40, w, h);
+
+		MoveWindow(110, 0, w + 126, h + 40);
+		m_pView->MoveWindow(110, 0, w+110, h);
+
 		m_pView->FitImgToWnd(w, h);
 	}
 	m_pView->Render();

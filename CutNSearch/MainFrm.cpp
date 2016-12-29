@@ -252,6 +252,10 @@ void CMainFrame::GetImgFilePath(CString strPath)
 void CMainFrame::InitConfituration()
 {
 
+	pView->initImageData();
+
+
+
 	CString sPath;
 	GetModuleFileName(nullptr, sPath.GetBuffer(_MAX_PATH + 1), _MAX_PATH);
 	sPath.ReleaseBuffer();
@@ -632,6 +636,9 @@ void CMainFrame::OnFileConfiguration()
 			fwrite(srcPath, pathSize, 1, fp);
 			fclose(fp);
 		}
+
+
+		InitConfituration();
 	}
 }
 

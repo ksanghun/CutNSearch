@@ -124,9 +124,7 @@ BOOL CDlgLogViewer::AddLogList()
 					fread(&fTh, sizeof(float), 1, fp);
 
 					strCode.Format(_T("%u"), nCode);
-					strFth.Format(_T("%3.2f"), fTh);
-
-					
+					strFth.Format(_T("%3.2f"), fTh);					
 
 
 					for (int i = 0; i < resSize; i++){

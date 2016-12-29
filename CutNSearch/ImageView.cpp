@@ -37,7 +37,8 @@ CImageView::CImageView()
 	m_left = m_right = m_bottom = m_top =0.0f;
 
 	m_iconSize = 100.0f;
-	m_fScreenScale = 2.5f;
+//	m_fScreenScale = 2.5f;
+	m_fScreenScale = 1.0f;
 
 	m_fMoveSpeed = 0.0f;
 	m_bIconMode = false;
@@ -131,7 +132,7 @@ void CImageView::ReleaseImageData()
 void CImageView::RealSizeIcon()
 {
 	if (m_iconSize > m_nWidth*0.5f){		
-		int hits = select_object_2d(m_nWidth*0.5f, m_nHeight*0.5f, m_nWidth, m_nHeight, _PICK_SELECT);
+		int hits = select_object_2d(m_wndWidth*0.5f, m_wndHeight*0.5f, m_wndWidth*0.5f, m_wndHeight*0.5f, _PICK_SELECT);
 		for (int i = 0; i < hits; i++){
 			CSNImage* pimg = GetSNImageByIndex((int)m_sellBuffer[i * 4 + 3]);
 			if (pimg->GetTexId() == 0){
@@ -263,14 +264,28 @@ void CImageView::PrepareRender()
 
 			for (int i = 0; i < iter_gr->second.size(); i++){
 				if (iter_gr->second[i]->GetTxTex() > 0){
-					iter_gr->second[i]->SetPosition(sPnt);
-					sPnt.x += m_iconSize + fMargin;
+					//iter_gr->second[i]->SetPosition(sPnt);
+					//sPnt.x += m_iconSize + fMargin;
 
-					if (sPnt.x > m_nWidth - m_iconSize*0.5f){ // Change Line
+					//if (sPnt.x > m_nWidth - m_iconSize*0.5f){ // Change Line
+					//	//	mtSetPoint3D(&sPnt, m_left + m_iconSize, m_top - (m_iconSize + fMargin)* ++linecnt, 0);
+					//	sPnt.x = m_iconSize*0.5f;
+					//	sPnt.y -= (m_iconSize + fMargin);
+					//}
+
+
+					
+
+					if (i % 10 ==0){ // Change Line
 						//	mtSetPoint3D(&sPnt, m_left + m_iconSize, m_top - (m_iconSize + fMargin)* ++linecnt, 0);
 						sPnt.x = m_iconSize*0.5f;
 						sPnt.y -= (m_iconSize + fMargin);
 					}
+
+					iter_gr->second[i]->SetPosition(sPnt);
+					sPnt.x += m_iconSize + fMargin;
+
+
 				}
 			}
 
@@ -377,6 +392,9 @@ void CImageView::InitGLview(int _nWidth, int _nHeight)
 	m_nWidth = _nWidth;
 	m_nHeight = _nHeight;
 
+	m_wndWidth = _nWidth;
+	m_wndHeight = _nHeight;
+
 	
 	m_lookAt.x = 0;
 	m_lookAt.y = 0;
@@ -454,6 +472,12 @@ void CImageView::OnSize(UINT nType, int cx, int cy)
 	COGLWnd::OnSize(nType, cx, cy);
 
 	// TODO: Add your message handler code here
+
+
+	m_wndWidth = cx;
+	m_wndHeight = cy;
+
+
 	wglMakeCurrent(m_CDCPtr->GetSafeHdc(), m_hRC);
 	m_nWidth = cx*m_fScreenScale;
 	m_nHeight = cy*m_fScreenScale;
