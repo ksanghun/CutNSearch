@@ -37,8 +37,8 @@ CImageView::CImageView()
 	m_left = m_right = m_bottom = m_top =0.0f;
 
 	m_iconSize = 100.0f;
-//	m_fScreenScale = 2.5f;
-	m_fScreenScale = 1.0f;
+	m_fScreenScale = 2.5f;
+//	m_fScreenScale = 1.0f;
 
 	m_fMoveSpeed = 0.0f;
 	m_bIconMode = false;
@@ -126,6 +126,9 @@ void CImageView::ReleaseImageData()
 
 	//CMainFrame* pM = (CMainFrame*)AfxGetMainWnd();
 	//pM->AddOutputString(_T("Clear All Images.."));
+
+	m_centerx = m_nWidth*0.5f;
+	m_centery = m_nHeight*0.5f;
 	
 }
 
@@ -251,39 +254,54 @@ void CImageView::PrepareRender()
 	//	}		
 	//}
 
+	
 	if (m_renderMode == _BYGROUP){
 		std::map<unsigned long, _vecSNImage>::iterator iter_gr = m_mapGrupImg.begin();
 		//	mtSetPoint3D(&sPnt, 0.0f + m_iconSize, m_top - m_iconSize - fMargin, 0);
+
+		//int row = 0;
+		//for (; iter_gr != m_mapGrupImg.end(); iter_gr++){
+		//	row += iter_gr->second.size();
+		//}
+
+		//row /= 20;
+
+		//sPnt.x = m_centerx - (m_iconSize+fMargin)*5.0f;
+		//sPnt.y = m_centery + (m_iconSize + fMargin)*row;
+
 		sPnt.x = m_iconSize*0.5f;
 		sPnt.y = m_nHeight - m_iconSize - fMargin;
 		sPnt.z = 0.0f;
 
+
+		iter_gr = m_mapGrupImg.begin();
 		for (; iter_gr != m_mapGrupImg.end(); iter_gr++){
 			// Group By Group //
 
 
 			for (int i = 0; i < iter_gr->second.size(); i++){
 				if (iter_gr->second[i]->GetTxTex() > 0){
-					//iter_gr->second[i]->SetPosition(sPnt);
-					//sPnt.x += m_iconSize + fMargin;
+					iter_gr->second[i]->SetPosition(sPnt);
+					sPnt.x += m_iconSize + fMargin;
 
-					//if (sPnt.x > m_nWidth - m_iconSize*0.5f){ // Change Line
-					//	//	mtSetPoint3D(&sPnt, m_left + m_iconSize, m_top - (m_iconSize + fMargin)* ++linecnt, 0);
-					//	sPnt.x = m_iconSize*0.5f;
-					//	sPnt.y -= (m_iconSize + fMargin);
-					//}
-
-
-					
-
-					if (i % 10 ==0){ // Change Line
+					if (sPnt.x > m_nWidth - m_iconSize*0.5f){ // Change Line
 						//	mtSetPoint3D(&sPnt, m_left + m_iconSize, m_top - (m_iconSize + fMargin)* ++linecnt, 0);
 						sPnt.x = m_iconSize*0.5f;
 						sPnt.y -= (m_iconSize + fMargin);
 					}
 
-					iter_gr->second[i]->SetPosition(sPnt);
-					sPnt.x += m_iconSize + fMargin;
+
+					
+
+					//if (i % 10 ==0){ // Change Line
+					//	//	mtSetPoint3D(&sPnt, m_left + m_iconSize, m_top - (m_iconSize + fMargin)* ++linecnt, 0);
+					//	sPnt.x = m_iconSize*0.5f;
+					////	sPnt.x = m_centerx - (m_iconSize + fMargin)*5.0f;
+					//	sPnt.y -= (m_iconSize + fMargin);
+					//}
+
+					//iter_gr->second[i]->SetPosition(sPnt);
+					//sPnt.x += m_iconSize + fMargin;
 
 
 				}
@@ -395,6 +413,9 @@ void CImageView::InitGLview(int _nWidth, int _nHeight)
 	m_wndWidth = _nWidth;
 	m_wndHeight = _nHeight;
 
+
+	m_centerx = 0.0f;
+	m_centery = 0.0f;
 	
 	m_lookAt.x = 0;
 	m_lookAt.y = 0;
@@ -482,8 +503,20 @@ void CImageView::OnSize(UINT nType, int cx, int cy)
 	m_nWidth = cx*m_fScreenScale;
 	m_nHeight = cy*m_fScreenScale;
 
+
+	m_centerx = m_nWidth*0.5f;
+	m_centery = m_nHeight*0.5f;
+
+
+
 	m_right = m_left + m_nWidth;
 	m_top = m_bottom + m_nHeight;
+
+	//m_left = m_centerx - m_nWidth*0.5f;
+	//m_right = m_centerx + m_nWidth*0.5f;
+	//m_top = m_centery + m_nHeight*0.5f;
+	//m_bottom = m_centery - m_nHeight*0.5f;
+
 
 	m_cameraPri.SetProjectionMatrix(30.0f, 0.0f, 0.0f, cx, cy);
 	m_cameraPri.SetModelViewMatrix(m_cameraPri.GetLookAt(), 0.0f, 0.0f);
@@ -812,6 +845,15 @@ void CImageView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	
 	if (GetCapture()){		
+
+		//m_centerx -= (point.x - m_mousedown.x);
+		//m_centery += (point.y - m_mousedown.y);
+		//m_left = m_centerx - m_nWidth*0.5f;
+		//m_right = m_centerx + m_nWidth*0.5f;
+		//m_top = m_centery + m_nHeight*0.5f;
+		//m_bottom = m_centery - m_nHeight*0.5f;
+
+
 		m_bottom += (point.y - m_mousedown.y)*m_fScreenScale;
 		if (m_bottom > 0.0f)
 			m_bottom = 0.0f;
@@ -1322,9 +1364,13 @@ void CImageView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 		m_pCurrSelImg = GetSNImageByIndex((int)m_sellBuffer[3]);
 		m_pCurrSelImg->SetSelecttion(true);
+
+		//m_centerx = m_pCurrSelImg->GetPos().x;
+		//m_centery = m_pCurrSelImg->GetPos().y;
 	}
 
-
+	//PrepareRender();
+	//Render();
 	COGLWnd::OnLButtonDown(nFlags, point);
 }
 
